@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>掛號統計 - MiniClinic</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #0F2443; border-bottom: 3px solid #14B8A6; padding-bottom: 8px; }
+        nav { background: #0F2443; padding: 12px; border-radius: 8px; margin-bottom: 24px; }
+        nav a { color: white; margin-right: 20px; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #5EEAD4; }
+        .stat-card { background: #F8FAFC; padding: 20px; border-left: 5px solid #14B8A6; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #0F2443; color: white; padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #E2E8F0; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}">首頁</a>
+        <a th:href="@{/doctors}">醫師清單</a>
+        <a th:href="@{/appointment/new}">線上掛號</a>
+        <a th:href="@{/appointments}">掛號記錄</a>
+        <a th:href="@{/stats}">系統統計</a>
+    </nav>
+
+    <h1>系統統計</h1>
+
+    <div class="stat-card">
+        <h2>基本統計</h2>
+        <p>醫師總數：<strong th:text="${doctorCount}">0</strong></p>
+        <p>病患總數：<strong th:text="${patientCount}">0</strong></p>
+        <p>掛號總數：<strong th:text="${appointmentCount}">0</strong></p>
+    </div>
+
+    <div class="stat-card">
+        <h2>各科別掛號數</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>科別</th>
+                    <th>掛號數</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="entry : ${deptStats}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

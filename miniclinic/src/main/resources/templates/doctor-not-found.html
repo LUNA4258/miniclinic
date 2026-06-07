@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找不到醫師 - MiniClinic</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #0F2443; }
+        nav { background: #0F2443; padding: 12px; border-radius: 8px; margin-bottom: 24px; }
+        nav a { color: white; margin-right: 20px; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #5EEAD4; }
+        .alert { background: #FEE2E2; color: #991B1B; padding: 16px; border-radius: 4px; margin: 20px 0; }
+        .back { display: inline-block; margin-top: 16px; color: #14B8A6; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}">首頁</a>
+        <a th:href="@{/doctors}">醫師清單</a>
+        <a th:href="@{/appointment/new}">線上掛號</a>
+        <a href="#">[預留]</a>
+    </nav>
+
+    <h1>找不到醫師</h1>
+    <div class="alert">
+        找不到編號為 <strong th:text="${doctorId}">D999</strong> 的醫師。
+    </div>
+    <a th:href="@{/doctors}" class="back">← 返回醫師清單</a>
+</body>
+</html>

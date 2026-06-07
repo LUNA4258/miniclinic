@@ -4,13 +4,13 @@ import jakarta.validation.constraints.Pattern;
 public class AppointmentForm {
 
     @NotBlank(message = "請輸入病歷號")
-    @Pattern(regexp = "TEST\\d{5}", message = "病歷號格式為 TESTxxxxx")
     private String chartNo;
 
     @NotBlank(message = "請選擇醫師")
     private String doctorId;
 
     @NotBlank(message = "請選擇日期")
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "日期格式必須為 YYYY-MM-DD")
     private String apptDate;
 
     @NotBlank(message = "請選擇時段")

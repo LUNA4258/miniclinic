@@ -2,6 +2,8 @@ package tw.edu.fju.miniclinic.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.sql.Types;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "patient")
@@ -17,7 +19,9 @@ public class Patient {
     @Column(name = "gender", length = 10)
     private String gender;
 
-    @Column(name = "birth_date")
+    @JdbcTypeCode(Types.VARCHAR)
+    @Convert(converter = LocalDateConverter.class)
+    @Column(name = "birth_date", columnDefinition = "TEXT")
     private LocalDate birthDate;
 
     @Column(name = "phone", length = 20)

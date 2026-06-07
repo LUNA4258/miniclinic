@@ -35,7 +35,7 @@ public class DashboardController {
         }
 
         LocalDate today = LocalDate.now();
-        List<Appointment> myAppointments = appointmentRepo.findByDoctorAndApptDate(doctor, today);
+        List<Appointment> myAppointments = appointmentRepo.findByDoctor(doctor);
 
         model.addAttribute("doctor", doctor);
         model.addAttribute("appointments", myAppointments);

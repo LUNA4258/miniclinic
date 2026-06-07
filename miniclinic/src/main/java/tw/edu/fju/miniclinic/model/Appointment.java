@@ -2,6 +2,8 @@ package tw.edu.fju.miniclinic.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.sql.Types;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "appointment")
@@ -22,7 +24,9 @@ public class Appointment {
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
-    @Column(name = "appt_date", nullable = false)
+    @JdbcTypeCode(Types.VARCHAR)
+    @Convert(converter = LocalDateConverter.class)
+    @Column(name = "appt_date", nullable = false, columnDefinition = "TEXT")
     private LocalDate apptDate;
 
     @Column(name = "time_slot", length = 20, nullable = false)

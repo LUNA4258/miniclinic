@@ -95,6 +95,9 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>tw.edu.fju.miniclinic.MiniclinicApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

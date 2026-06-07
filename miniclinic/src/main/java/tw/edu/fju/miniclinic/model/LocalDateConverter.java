@@ -5,14 +5,25 @@ import jakarta.persistence.Converter;
 import java.time.LocalDate;
 
 @Converter(autoApply = true)
-public class LocalDateConverter implements AttributeConverter<LocalDate, String> {
+public class LocalDateConverter implements AttributeConverter<LocalDate, Object> {
+
     @Override
-    public String convertToDatabaseColumn(LocalDate date) {
+    public Object convertToDatabaseColumn(LocalDate date) {
         return date == null ? null : date.toString();
     }
 
     @Override
-    public LocalDate convertToEntityAttribute(String s) {
-        return s == null ? null : LocalDate.parse(s);
+    public LocalDate convertToEntityAttribute(Object dbData) {
+        if (dbData == null) return null;
+        
+        if (dbData instanceof java.sql.Date) {
+            return ((java.sql.Date) dbData).toLocalDate();
+        }
+        if (dbData instanceof LocalDate) {
+            return (LocalDate) dbData;
+        }
+        
+        String str = dbData.toString();
+        return LocalDate.parse(str.length() > 10 ? str.substring(0, 10) : str);
     }
 }

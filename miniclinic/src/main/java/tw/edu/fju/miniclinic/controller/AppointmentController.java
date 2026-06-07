@@ -45,7 +45,7 @@ public class AppointmentController {
     // POST：接收表單
     @PostMapping("/appointment/new")
     public String submitAppointment(
-        @Valid @ModelAttribute AppointmentForm form,
+        @Valid @ModelAttribute("form") AppointmentForm form,
         BindingResult result,
         Model model) {
             if (result.hasErrors()) {
@@ -59,13 +59,22 @@ public class AppointmentController {
 
             if (patient == null || doctor == null) {
                 model.addAttribute("error", "查無此病歷號或醫師");
+                model.addAttribute("doctors", doctorRepo.findAll());
                 return "appointment-new";
             }
 
             Appointment appt = new Appointment();
             appt.setPatient(patient);
             appt.setDoctor(doctor);
-            appt.setApptDate(LocalDate.parse(form.getApptDate()));
+            
+            try {
+                appt.setApptDate(LocalDate.parse(form.getApptDate()));
+            } catch (Exception e) {
+                model.addAttribute("error", "日期無效 (請確認該日期是否存在)");
+                model.addAttribute("doctors", doctorRepo.findAll());
+                return "appointment-new";
+            }
+
             appt.setTimeSlot(form.getTimeSlot());
             appt.setStatus("BOOKED");
 

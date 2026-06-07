@@ -58,7 +58,7 @@ public class AppointmentApiController {
         return ResponseEntity.ok(appointmentRepo.findAll());
     }
 
-    @PutMapping("/api/appointments/{apptId}/status")
+    @PutMapping("/{apptId}/status")
 public ResponseEntity<Appointment> updateStatus(
 		@PathVariable Long apptId,
 		@RequestBody Map<String, String> payload,

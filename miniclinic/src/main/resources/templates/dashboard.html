@@ -52,10 +52,14 @@
                 <td th:text="${appt.patient.chartNo}">TEST00001</td>
                 <td>
                     <span th:text="${appt.status}"
-                          th:class="${'status-' + appt.status}">BOOKED</span>
+                    th:class="${'status-' + appt.status}">BOOKED</span>
                 </td>
                 <td>
-                    <!-- 僅顯示 BOOKED 狀態才有的取消按鈕 -->
+                    <!-- 僅顯示 BOOKED 狀態才有的操作按鈕 -->
+                    <button th:if="${appt.status == 'BOOKED'}"
+                            th:data-id="${appt.apptId}"
+                            onclick="completeAppointment(this)"
+                            style="background: #14B8A6; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-right: 4px;">看診完成</button>
                     <button th:if="${appt.status == 'BOOKED'}"
                             th:data-id="${appt.apptId}"
                             onclick="cancelAppointment(this)"
@@ -69,6 +73,23 @@
     </p>
 
     <script>
+        function completeAppointment(btn) {
+            if (!confirm("確定要將此掛號標記為「看診完成」嗎？")) return;
+            
+            const apptId = btn.getAttribute("data-id");
+            fetch(`/api/appointments/${apptId}/status`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'COMPLETED' })
+            }).then(res => {
+                if (res.ok) {
+                    location.reload();
+                } else {
+                    alert("更新失敗，可能因為權限不足或掛號已不存在");
+                }
+            });
+        }
+
         function cancelAppointment(btn) {
             if (!confirm("確定要取消此掛號嗎？")) return;
             

@@ -28,7 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
                 "/login",
                 "/logout",
                 "/api/appointments",     // 排除建立掛號的 API，允許未登入存取
-                "/appointments/**"       // 如果有前端掛號頁面，也可以在這裡排除
+                "/appointments/**",      // 如果有前端掛號頁面，也可以在這裡排除
+                "/api/stats"             // 排除統計摘要 API，供外部 AI agent 驗收
             );
     }
 }
